@@ -214,8 +214,8 @@ export const LOCATION_DETAILS: Record<string, LocationDetail> = {
         {
           title: '憑證代碼 ACCESS CODE',
           items: [
-            { label: '預約編號 NO.', value: '119031426' },
-            { label: '查詢密碼 PW.', value: '9b6f189a' },
+            { label: '預約編號 NO.', value: '***' },
+            { label: '查詢密碼 PW.', value: '***' },
           ]
         },
         {
@@ -230,7 +230,7 @@ export const LOCATION_DETAILS: Record<string, LocationDetail> = {
           items: [
             { label: '車型等級', value: 'C1クラス_S2 (Toyota)' },
             { label: '基本配備', value: '禁菸車 / 導航系統' },
-            { label: '駕駛人', value: 'Chang Shi Yi', isFullWidth: true },
+            { label: '駕駛人', value: '***', isFullWidth: true },
           ]
         },
         {
