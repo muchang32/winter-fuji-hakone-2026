@@ -13,7 +13,7 @@ import { SunIcon, CloudIcon, RainIcon, SnowIcon } from './components/Icons';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>(Tab.ITINERARY);
-  
+
   const [checkedItems, setCheckedItems] = useState<Set<string>>(() => {
     try {
       const saved = localStorage.getItem('checked_items');
@@ -63,8 +63,11 @@ const App: React.FC = () => {
   const [expensesError, setExpensesError] = useState<string | null>(null);
   const [weather, setWeather] = useState<{ temp: number; code: number } | null>(null);
 
-  useEffect(() => { 
-    window.scrollTo(0, 0); 
+  useEffect(() => {
+    // 強制讓外層容易滾動的元件回到頂部
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+    document.body.scrollTo({ top: 0, behavior: 'smooth' });
   }, [activeTab, selectedDateIdx]);
 
   useEffect(() => {
@@ -88,7 +91,7 @@ const App: React.FC = () => {
       const response = await fetch(`${GOOGLE_SCRIPT_URL}?t=${new Date().getTime()}`);
       const json = await response.json();
       if (json.status === 'error' || json.result === 'error') throw new Error(json.message);
-      
+
       const parsedData: ExpenseRecord[] = (json.data || [])
         .map((row: any) => ({
           rowIndex: Number(row.rowIndex),
@@ -123,7 +126,7 @@ const App: React.FC = () => {
   };
 
   const getWeatherIcon = (code: number) => {
-    const ic = "w-9 h-9"; 
+    const ic = "w-9 h-9";
     if (code === 0) return <SunIcon className={`${ic} text-mag-gold`} />;
     if (code >= 1 && code <= 3) return <CloudIcon className={`${ic} text-gray-400`} />;
     if ((code >= 45 && code <= 48) || (code >= 51 && code <= 55)) return <CloudIcon className={`${ic} text-gray-300`} />;
@@ -142,22 +145,22 @@ const App: React.FC = () => {
         <div className="max-w-xl mx-auto">
           {/* Row 1: Brand & Weather */}
           <div className="flex justify-between items-center py-5 px-6">
-             <div className="text-left">
-                <div className="flex items-center gap-1.5 mb-1.5">
-                  <span className="bg-mag-black text-white text-[10px] px-1.5 py-0.5 rounded-none font-black tracking-normal leading-none">2026</span>
-                  <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-mag-gold">Tokyo Trip</span>
+            <div className="text-left">
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <span className="bg-mag-black text-white text-[10px] px-1.5 py-0.5 rounded-none font-black tracking-normal leading-none">2026</span>
+                <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-mag-gold">Tokyo Trip</span>
+              </div>
+              <h1 className="font-noto font-medium text-[20px] leading-none">冬富士之旅</h1>
+            </div>
+            {weather && (
+              <div className="flex items-center gap-3">
+                <div className="text-right">
+                  <div className="text-lg font-mono font-black text-mag-black leading-none mb-1">{weather.temp}°C</div>
+                  <div className="text-[10px] font-bold text-gray-400 uppercase leading-none tracking-tighter">TOKYO</div>
                 </div>
-                <h1 className="font-noto font-medium text-[20px] leading-none">冬富士之旅</h1>
-             </div>
-             {weather && (
-               <div className="flex items-center gap-3">
-                  <div className="text-right">
-                    <div className="text-lg font-mono font-black text-mag-black leading-none mb-1">{weather.temp}°C</div>
-                    <div className="text-[10px] font-bold text-gray-400 uppercase leading-none tracking-tighter">TOKYO</div>
-                  </div>
-                  {getWeatherIcon(weather.code)}
-               </div>
-             )}
+                {getWeatherIcon(weather.code)}
+              </div>
+            )}
           </div>
 
           {/* Row 2: Navigation Tabs */}
@@ -166,17 +169,16 @@ const App: React.FC = () => {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`flex-1 pt-0 pb-3 text-[13px] font-noto transition-all border-b-[4px] text-center whitespace-nowrap ${
-                  activeTab === tab 
-                    ? 'border-mag-gold text-mag-black font-bold' 
+                className={`flex-1 pt-0 pb-3 text-[13px] font-noto transition-all border-b-[4px] text-center whitespace-nowrap ${activeTab === tab
+                    ? 'border-mag-gold text-mag-black font-bold'
                     : 'border-transparent text-gray-400 font-normal'
-                }`}
+                  }`}
               >
-                {tab === Tab.ITINERARY ? '行程' : 
-                 tab === Tab.PREP ? '準備' : 
-                 tab === Tab.COST ? '記帳' : 
-                 tab === Tab.PACKING ? '行李' : 
-                 tab === Tab.SHOPPING ? '購物' : '資訊'}
+                {tab === Tab.ITINERARY ? '行程' :
+                  tab === Tab.PREP ? '準備' :
+                    tab === Tab.COST ? '記帳' :
+                      tab === Tab.PACKING ? '行李' :
+                        tab === Tab.SHOPPING ? '購物' : '資訊'}
               </button>
             ))}
           </nav>
@@ -190,9 +192,8 @@ const App: React.FC = () => {
                   onClick={() => setSelectedDateIdx(idx)}
                   className="flex-1 flex flex-col items-center justify-center py-3 transition-all"
                 >
-                  <div className={`flex flex-col items-center justify-center w-11 h-11 transition-all ${
-                    selectedDateIdx === idx ? 'bg-mag-black text-white' : 'bg-transparent'
-                  }`}>
+                  <div className={`flex flex-col items-center justify-center w-11 h-11 transition-all ${selectedDateIdx === idx ? 'bg-mag-black text-white' : 'bg-transparent'
+                    }`}>
                     <div className={`text-[9px] font-bold mb-1 leading-none ${selectedDateIdx === idx ? 'text-gray-300' : 'text-mag-gray'}`}>
                       {day.weekday[2]}
                     </div>
@@ -208,10 +209,10 @@ const App: React.FC = () => {
       </header>
 
       {/* Main Content Area - 增加 Safe Area 補償 */}
-      <main 
+      <main
         className={`max-w-xl mx-auto px-6 pt-safe-top min-h-screen`}
-        style={{ 
-          paddingTop: `calc(${activeTab === Tab.ITINERARY ? '205px' : '135px'} + env(safe-area-inset-top))` 
+        style={{
+          paddingTop: `calc(${activeTab === Tab.ITINERARY ? '205px' : '135px'} + env(safe-area-inset-top))`
         }}
       >
         {activeTab === Tab.ITINERARY && (
@@ -221,10 +222,10 @@ const App: React.FC = () => {
           <PrepView checkedItems={checkedItems} toggleItem={toggleItem} list={todoList} setList={setTodoList} />
         )}
         {activeTab === Tab.PACKING && (
-          <PackingView 
-            checkedItems={checkedItems} 
-            toggleItem={toggleItem} 
-            carryOnList={carryOnList} 
+          <PackingView
+            checkedItems={checkedItems}
+            toggleItem={toggleItem}
+            carryOnList={carryOnList}
             setCarryOnList={setCarryOnList}
             checkedBagList={checkedBagList}
             setCheckedBagList={setCheckedBagList}
