@@ -19,6 +19,7 @@ const VOUCHERS = [
   { name: '超級飯店淺草', url: 'https://drive.google.com/file/d/1ouzUTLlbnmaonE4dG6zgd1xRz6dSpyXc/view?usp=drive_link' },
   { name: '超級飯店御殿場2號館', url: 'https://drive.google.com/file/d/1aBnceOHoFX-Z1-ACjKxBGtSY2g8Bgtcg/view?usp=drive_link' },
   { name: '富士河口湖溫泉新世紀飯店', url: 'https://drive.google.com/file/d/11W_yXiv9smooCziFY3cgm5MA1cs7ReKb/view?usp=drive_link' },
+  { name: '高速巴士東京到河口湖', url: 'https://drive.google.com/file/d/1Prq8OuI3U3YHnczZNrnD1fAHME3T_NPn/view?usp=drive_link' },
   { name: '高速巴士御殿場到東京', url: 'https://drive.google.com/file/d/1_SsCKBaWnwsNkJZcWBVB2uWKBSZTXkQR/view?usp=drive_link' },
 ];
 
@@ -74,25 +75,25 @@ export const PrepView: React.FC<PrepViewProps> = ({ checkedItems, toggleItem, li
 
   return (
     <div className="pb-32 pt-2 animate-in fade-in duration-500">
-      
+
       {/* Section 1: Travel Notes */}
       <div className="mb-8 bg-white border border-gray-100 shadow-soft p-5 relative overflow-hidden">
         <div className="flex items-center gap-2 mb-4 border-b border-gray-50 pb-3">
-           <div className="w-1 h-4 bg-mag-gold"></div>
-           <h3 className="text-lg font-noto font-bold text-mag-black leading-none">旅途叮嚀</h3>
+          <div className="w-1 h-4 bg-mag-gold"></div>
+          <h3 className="text-lg font-noto font-bold text-mag-black leading-none">旅途叮嚀</h3>
         </div>
 
         <div className="space-y-4">
           {PRE_TRIP_NOTES.map((note, idx) => (
             <div key={idx} className="flex gap-3 items-baseline">
-               <span className="text-[12px] font-mono font-black text-mag-gold shrink-0 leading-none">
-                 {(idx + 1).toString().padStart(2, '0')}
-               </span>
-               <div className="flex-1">
-                  <p className="text-sm font-medium text-mag-black leading-relaxed tracking-tight">
-                    {note}
-                  </p>
-               </div>
+              <span className="text-[12px] font-mono font-black text-mag-gold shrink-0 leading-none">
+                {(idx + 1).toString().padStart(2, '0')}
+              </span>
+              <div className="flex-1">
+                <p className="text-sm font-medium text-mag-black leading-relaxed tracking-tight">
+                  {note}
+                </p>
+              </div>
             </div>
           ))}
         </div>
@@ -105,7 +106,7 @@ export const PrepView: React.FC<PrepViewProps> = ({ checkedItems, toggleItem, li
         </div>
         <div className="bg-white rounded-none shadow-soft border border-gray-100 overflow-hidden divide-y divide-gray-50">
           {VOUCHERS.map((voucher, idx) => (
-            <a 
+            <a
               key={idx}
               href={voucher.url}
               target="_blank"
@@ -130,7 +131,7 @@ export const PrepView: React.FC<PrepViewProps> = ({ checkedItems, toggleItem, li
       <div className="pt-2">
         <div className="flex items-center justify-between mb-4 px-1">
           <h2 className="text-[10px] font-black tracking-[0.2em] text-mag-gray uppercase">待辦事項</h2>
-          <button 
+          <button
             onClick={handleOpenAdd}
             className="p-2 bg-mag-black text-white shadow-md active:scale-95 transition-transform"
           >
@@ -144,19 +145,17 @@ export const PrepView: React.FC<PrepViewProps> = ({ checkedItems, toggleItem, li
 
             return (
               <div key={item.id} className="group flex items-center gap-3 p-4 hover:bg-gray-50 transition-colors">
-                <div 
+                <div
                   onClick={() => toggleItem(item.id)}
-                  className={`flex-shrink-0 w-5 h-5 border-2 flex items-center justify-center transition-all cursor-pointer ${
-                    isChecked ? 'bg-mag-gold border-mag-gold' : 'bg-white border-gray-300'
-                  }`}
+                  className={`flex-shrink-0 w-5 h-5 border-2 flex items-center justify-center transition-all cursor-pointer ${isChecked ? 'bg-mag-gold border-mag-gold' : 'bg-white border-gray-300'
+                    }`}
                 >
                   {isChecked && <CheckIcon className="w-3.5 h-3.5 text-white" />}
                 </div>
-                <span 
+                <span
                   onClick={() => toggleItem(item.id)}
-                  className={`flex-1 text-sm leading-snug cursor-pointer select-none ${
-                    isChecked ? 'text-gray-400 line-through' : 'text-mag-black font-black'
-                  }`}
+                  className={`flex-1 text-sm leading-snug cursor-pointer select-none ${isChecked ? 'text-gray-400 line-through' : 'text-mag-black font-black'
+                    }`}
                 >
                   {item.text}
                 </span>
@@ -182,12 +181,12 @@ export const PrepView: React.FC<PrepViewProps> = ({ checkedItems, toggleItem, li
             <h3 className="text-lg font-bold mb-4 text-mag-black">
               {modalMode === 'add' ? '新增待辦事項' : '編輯待辦事項'}
             </h3>
-            <input 
+            <input
               ref={modalInputRef}
-              type="text" 
-              value={modalText} 
-              onChange={(e) => setModalText(e.target.value)} 
-              placeholder="輸入內容..." 
+              type="text"
+              value={modalText}
+              onChange={(e) => setModalText(e.target.value)}
+              placeholder="輸入內容..."
               className="w-full bg-gray-50 border border-gray-200 p-3 mb-6 outline-none font-bold focus:border-mag-gold"
               onKeyDown={(e) => e.key === 'Enter' && handleModalSubmit()}
             />
