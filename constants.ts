@@ -2,9 +2,9 @@
 import { DaySchedule, ChecklistItem, LocationDetail, UsefulLink, EmergencyContact } from './types';
 
 // Google Apps Script URL for Expenses
-export const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzzUfpIKQr_chQfhyu_mUh718ZBomovQwmHebKd-M10WVCimYeaAFfHdGd_upZ0DvB4MA/exec';
+export const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL || '';
 // Optional: Google Sheet URL for direct access (Placeholder)
-export const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1GxlqNNOFl6M7GkjXaAmaFiLY90Ia_irHyerJ6_v0258/edit?gid=1261285869#gid=1261285869';
+export const GOOGLE_SHEET_URL = import.meta.env.VITE_GOOGLE_SHEET_URL || '';
 
 export const PRE_TRIP_NOTES = [
   "河口湖 -5~8°C / 東京 3~13°C",
